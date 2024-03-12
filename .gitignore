@@ -21,3 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+/src/axios-config.js
+/src/axios-config.js.map
