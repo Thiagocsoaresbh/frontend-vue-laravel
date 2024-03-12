@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://bank-test-3c74d9b539e4.herokuapp.com/',
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true,
     timeout: 5000,
 });
 

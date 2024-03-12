@@ -1,22 +1,20 @@
-import axios from 'axios';
+import api from '@/axios-config';
 
 interface LoginResponse {
   token: string;
 }
 
 const AuthService = {
-  async login(username: string, password: string): Promise<string> {
+  async login(email: string, password: string): Promise<void> {
     try {
-      const response = await axios.post<LoginResponse>('https://bank-test-3c74d9b539e4.herokuapp.com/login', {
-        username: username,
-        password: password
+      await api.get('/sanctum/csrf-cookie');
+      const response = await api.post<LoginResponse>('/login', {
+        email,
+        password
       });
-      
+
       const token = response.data.token;
-      
       localStorage.setItem('token', token);
-      
-      return token;
     } catch (error) {
       throw new Error('Failed to login. Please check your credentials and try again.');
     }
