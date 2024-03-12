@@ -19,6 +19,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+import api from '@/axios-config';
+
+const router = useRouter();
 
 const email = ref('');
 const username = ref('');
@@ -26,23 +30,19 @@ const password = ref('');
 
 const login = async () => {
   try {
-
-    const response = await axios.post('http://localhost:3000/login', {
+    const response = await api.post('/login', {
       email: email.value,
       username: username.value,
       password: password.value
     });
 
-
     if (response.status === 200) {
-
       router.push('/home');
+      console.log('Login bem-sucedido!');
     } else {
-
       console.error('Erro ao fazer login:', response.data);
     }
   } catch (error) {
-
     console.error('Erro ao fazer login:', error);
   }
 };
