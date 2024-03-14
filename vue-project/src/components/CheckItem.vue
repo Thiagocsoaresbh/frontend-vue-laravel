@@ -4,36 +4,32 @@
     <p>Amount: ${{ check.amount }}</p>
     <p>Status: {{ check.status }}</p>
     <p>Date: {{ formatDate(check.submissionDate) }}</p>
-    <button v-if="showActions && check.status === 'pending'" @click="approveCheck(check.id)">Approve</button>
-    <button v-if="showActions && check.status === 'pending'" @click="rejectCheck(check.id)">Reject</button>
+    <button v-if="showActions && check.status === 'pending'" @click="approveCheck">Approve</button>
+    <button v-if="showActions && check.status === 'pending'" @click="rejectCheck">Reject</button>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    check: {
-      type: Object,
-      required: true,
-    },
-    showActions: {
-      type: Boolean,
-      default: false,
-    }
+<script setup>
+import { defineProps, emit } from 'vue';
+
+const { check, showActions } = defineProps({
+  check: {
+    type: Object,
+    required: true,
   },
-  methods: {
-    formatDate(dateString) {
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
-    },
-    approveCheck(id) {
-      this.$emit('approve', id);
-    },
-    rejectCheck(id) {
-      this.$emit('reject', id);
-    },
-  },
+  showActions: {
+    type: Boolean,
+    default: false,
+  }
+});
+
+const formatDate = (dateString) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
 };
+
+const approveCheck = () => emit('approve', check.id);
+const rejectCheck = () => emit('reject', check.id);
 </script>
 
 <style>

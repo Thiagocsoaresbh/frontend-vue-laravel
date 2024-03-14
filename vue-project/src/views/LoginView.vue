@@ -27,17 +27,15 @@ const router = useRouter();
 
 const handleLogin = async () => {
   try {
-    await authStore.loginUser({ email: email.value, password: password.value });
-    router.push({ name: 'Home' });
+    // Call the loginUser method from the auth store
+    const result = await authStore.loginUser({ email: email.value, password: password.value });
+    if(result) {
+      router.push({ name: 'Home' });
+    } else {
+      console.error('Authentication failed');
+    }
   } catch (error) {
     console.error('Error logging in:', error);
-    // Handle error, e.g., show an error message to the user
   }
 };
 </script>
-
-<style scoped>
-.login-container {
-  margin:0;
-}
-</style>

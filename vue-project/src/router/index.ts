@@ -17,7 +17,8 @@ const router = createRouter({
     {
       path: '/home',
       name: 'Home',
-      component: () => import('../views/HomeView.vue')
+      component: () => import('../views/HomeView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -27,32 +28,38 @@ const router = createRouter({
     {
       path: '/expenses',
       name: 'Expenses',
-      component: () => import('../views/ExpensesView.vue')
+      component: () => import('../views/ExpensesView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/add-purchase',
       name: 'AddPurchase',
-      component: () => import('../views/AddPurchaseView.vue')
+      component: () => import('../views/AddPurchaseView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/accepted-checks',
       name: 'AcceptedChecks',
-      component: () => import('../views/AcceptedChecksView.vue')
+      component: () => import('../views/AcceptedChecksView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/deposit-check',
       name: 'DepositCheck',
-      component: () => import('../views/DepositCheckView.vue')
+      component: () => import('../views/DepositCheckView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/deposit-check/completed',
       name: 'DepositCheckCompleted',
-      component: () => import('../views/DepositCheckCompletedView.vue')
+      component: () => import('../views/DepositCheckCompletedView.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/checks',
       name: 'CheckList',
-      component: () => import('../views/ChecklistView.vue')
+      component: () => import('../views/ChecklistView.vue'),
+      meta: { requiresAuth: true }
     },
   ]
 });

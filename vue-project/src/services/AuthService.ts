@@ -1,5 +1,5 @@
-import axios from 'axios';
 import type { LoginData, RegisterData, AuthResponse } from '@/types/types';
+import axios from '../axios-config';
 
 class AuthService {
   async login(loginData: LoginData): Promise<AuthResponse | null> {
