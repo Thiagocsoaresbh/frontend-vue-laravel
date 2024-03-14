@@ -10,9 +10,14 @@ export interface RegisterData extends LoginData {
 export interface AuthResponse {
   access_token: string;
   token_type: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
+  user: User;
 }
+
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+}
+

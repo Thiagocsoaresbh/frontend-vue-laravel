@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 import AuthService from '@/services/AuthService';
-import type { LoginData, RegisterData, AuthResponse } from '@/types/types';
+import type { LoginData, RegisterData, } from '@/types/types';
+import type { User } from '@/types/types'; 
 
 interface UserState {
-  user: AuthResponse['user'] | null;
+  user: User | null; //Using the User interface
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -17,8 +18,8 @@ export const useAuthStore = defineStore('auth', {
     async loginUser(loginData: LoginData) {
       try {
         const data = await AuthService.login(loginData);
-        if (data) {
-          this.user = data.user;
+        if (data && data.user) { // Certifying that data.user exists
+          this.user = data.user; // Assuming that data.user is the user object now 
           localStorage.setItem('access_token', data.access_token);
           AuthService.setAuthToken(data.access_token);
         }
@@ -43,4 +44,3 @@ export const useAuthStore = defineStore('auth', {
     },
   },
 });
-
