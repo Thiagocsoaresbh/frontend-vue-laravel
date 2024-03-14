@@ -1,9 +1,9 @@
 <template>
   <div class="transaction-item">
-    <div>{{ transaction.date | formatDate }}</div>
+    <div>{{ formatDate(transaction.date) }}</div>
     <div>{{ transaction.description }}</div>
     <div :class="{'income': isIncome, 'expense': !isIncome}">
-      {{ transaction.amount | currencyFormat }}
+      {{ currencyFormat(transaction.amount) }}
     </div>
   </div>
 </template>
@@ -11,30 +11,28 @@
 <script setup>
 import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   transaction: {
     type: Object,
     required: true
   }
 });
 
-const isIncome = computed(() => {
-  return transaction.type === 'income';
-});
+const isIncome = computed(() => props.transaction.type === 'income');
 
-// Filter to format the date
-app.config.globalProperties.$filters = {
-  formatDate(value) {
-    if (value) {
-      return new Date(value).toLocaleDateString();
-    }
-  },
-  currencyFormat(value) {
-    if (value) {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
-    }
+// Composable to formatt date
+function formatDate(value) {
+  if (value) {
+    return new Date(value).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
   }
-};
+}
+
+// Composable to format currency
+function currencyFormat(value) {
+  if (value) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+  }
+}
 </script>
 
 <style scoped>
