@@ -10,47 +10,34 @@
         <label for="password">Password:</label>
         <input id="password" type="password" v-model="password" required>
       </div>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <button type="submit">Login</button>
     </form>
   </div>
 </template>
 
-<script>
-import { errorMessage } from 'vue/compiler-sfc';
-import axios from '../axios-config';
+<script setup>
+import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      errorMessage: '',
-    };
-  },
-  methods: {
-    async handleLogin() {
-      this.errorMessage = '';
-      try {
-        const response = await axios.post('/login', {
-          email: this.email,
-          password: this.password,
-        }, { withCredentials: true });
-        if (response.data) {
-          
-          this.$router.push('/home');
-        }
-      } catch (error) {
-        console.error('Error logging in:', error.response.data);
-        this.errorMessage = error.response.data.message || 'Error to conect';
-      }
-    },
-  },
+const email = ref('');
+const password = ref('');
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogin = async () => {
+  try {
+    await authStore.loginUser({ email: email.value, password: password.value });
+    router.push({ name: 'Home' });
+  } catch (error) {
+    console.error('Error logging in:', error);
+    // Handle error, e.g., show an error message to the user
+  }
 };
 </script>
-<style>
-.error-message {
-  color: red;
-  margin: 10px 0;
+
+<style scoped>
+.login-container {
+  margin:0;
 }
 </style>

@@ -1,23 +1,5 @@
 import axios from 'axios';
-
-interface LoginData {
-  email: string;
-  password: string;
-}
-
-interface RegisterData extends LoginData {
-  username: string;
-}
-
-interface AuthResponse {
-  access_token: string;
-  token_type: string;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
-}
+import type { LoginData, RegisterData, AuthResponse } from '@/types/types';
 
 class AuthService {
   async login(loginData: LoginData): Promise<AuthResponse | null> {
@@ -50,7 +32,16 @@ class AuthService {
   logout(): void {
     localStorage.removeItem('access_token');
     delete axios.defaults.headers.common['Authorization'];
-    
+  }
+
+  setAuthToken(token: string): void {
+    localStorage.setItem('access_token', token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  }
+
+  clearAuthToken(): void {
+    localStorage.removeItem('access_token');
+    delete axios.defaults.headers.common['Authorization'];
   }
 }
 

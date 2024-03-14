@@ -1,7 +1,7 @@
 <template>
-  <div class="signup-container">
+  <div class="register-container">
     <h1>Sign Up</h1>
-    <form @submit.prevent="handleSignUp">
+    <form @submit.prevent="Register">
       <div>
         <label for="username">Username:</label>
         <input id="username" type="text" v-model="username" required>
@@ -29,7 +29,7 @@ export default {
     const email = ref('');
     const password = ref('');
 
-    const handleSignUp = async () => {
+    const handleRegister = async () => {
       try {
         const response = await axios.post('/register', {
           username: username.value,
@@ -48,7 +48,7 @@ export default {
       }
     };
 
-    return { username, email, password, handleSignUp };
+    return { username, email, password, handleRegister };
   },
 };
 </script>
