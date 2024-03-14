@@ -1,18 +1,23 @@
 <template>
-    <div class="home-view">
-      <h1>Welcome to BNB Bank</h1>
+    <div class="signUp">
+      <h1>BNB Bank</h1>
+      AA
     </div>
   </template>
   
   <script>
   export default {
-    name: 'HomeView'
+    name: "SignUp",
+
   };
   </script>
   
   <style scoped>
-  .home-view {
+
+  .signUp {
     text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
   }
   </style>

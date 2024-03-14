@@ -1,20 +1,55 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
-import LoginView from '../views/LoginView.vue';
-import BalanceHomeView from '../views/BalanceHomeView.vue';
-import ExpensesView from '../views/ExpensesView.vue';
-
-const routes = [
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: LoginView },
-  { path: '/home', component: HomeView },
-  { path: '/balance', component: BalanceHomeView },
-  { path: '/expenses', component: ExpensesView },
-];
+import SignUpView from '../views/SignUpView.vue'
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'SignUp',
+      component: SignUpView
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: () => import('../views/HomeView.vue')
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/expenses',
+      name: 'Expenses',
+      component: () => import('../views/ExpensesView.vue')
+    },
+    {
+      path: '/add-purchase',
+      name: 'AddPurchase',
+      component: () => import('../views/AddPurchaseView.vue')
+    },
+    {
+      path: '/accepted-checks',
+      name: 'AcceptedChecks',
+      component: () => import('../views/AcceptedChecksView.vue')
+    },
+    {
+      path: '/deposit-check',
+      name: 'DepositCheck',
+      component: () => import('../views/DepositCheckView.vue')
+    },
+    {
+      path: '/deposit-check/completed',
+      name: 'DepositCheckCompleted',
+      component: () => import('../views/DepositCheckCompletedView.vue')
+    },
+    {
+      path: '/checks',
+      name: 'CheckList',
+      component: () => import('../views/ChecklistView.vue')
+    },
+  ]
 });
 
 export default router;

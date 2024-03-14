@@ -32,7 +32,7 @@
         <div>08/13/2021, 10:03 PM</div>
         <div>$3200.00</div>
       </div>
-      <!-- More transactions here -->
+
     </div>
   </div>    </div>
   </div>
@@ -42,10 +42,10 @@
 export default {
   methods: {
     depositCheck() {
-      console.log('Depositar cheque');
+      console.log('Deposit a check');
     },
     purchase() {
-      console.log('Fazer uma compra');
+      console.log('Make a purchase');
     }
   }
 };

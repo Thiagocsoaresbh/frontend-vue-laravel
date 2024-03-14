@@ -1,71 +1,56 @@
 <template>
-  <div class="login">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <label for="email">Email</label>
-      <input type="email" id="email" v-model="email" required>
-    
-      <label for="password">Password</label>
-      <input type="password" id="password" v-model="password" required>
-
+  <div class="login-container">
+    <h1>Login</h1>
+    <form @submit.prevent="handleLogin">
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" v-model="email" required>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" v-model="password" required>
+      </div>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <button type="submit">Login</button>
     </form>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import AuthService from '@/services/AuthService';
+<script>
+import { errorMessage } from 'vue/compiler-sfc';
+import axios from '../axios-config';
 
-const router = useRouter();
-const email = ref('');
-const password = ref('');
-
-const login = async () => {
-  try {
-    const token = await AuthService.login(email.value, password.value);
-    if (token) {
-      router.push('/home');
-      console.log('Login bem-sucedido!');
-    }
-  } catch (error) {
-    console.error('Erro ao fazer login:', error);
-  }
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      errorMessage: '',
+    };
+  },
+  methods: {
+    async handleLogin() {
+      this.errorMessage = '';
+      try {
+        const response = await axios.post('/login', {
+          email: this.email,
+          password: this.password,
+        }, { withCredentials: true });
+        if (response.data) {
+          
+          this.$router.push('/home');
+        }
+      } catch (error) {
+        console.error('Error logging in:', error.response.data);
+        this.errorMessage = error.response.data.message || 'Error to conect';
+      }
+    },
+  },
 };
-
 </script>
-
-<style scoped>
-.login {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-label {
-  font-weight: bold;
-}
-
-input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-}
-
-button {
-  padding: 0.5rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+<style>
+.error-message {
+  color: red;
+  margin: 10px 0;
 }
 </style>

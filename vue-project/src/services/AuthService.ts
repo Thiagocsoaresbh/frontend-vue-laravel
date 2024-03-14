@@ -1,24 +1,57 @@
-import api from '@/axios-config';
+import axios from 'axios';
 
-interface LoginResponse {
-  token: string;
+interface LoginData {
+  email: string;
+  password: string;
 }
 
-const AuthService = {
-  async login(email: string, password: string): Promise<void> {
-    try {
-      await api.get('/sanctum/csrf-cookie');
-      const response = await api.post<LoginResponse>('/login', {
-        email,
-        password
-      });
+interface RegisterData extends LoginData {
+  username: string;
+}
 
-      const token = response.data.token;
-      localStorage.setItem('token', token);
+interface AuthResponse {
+  access_token: string;
+  token_type: string;
+  user: {
+    id: number;
+    username: string;
+    email: string;
+  };
+}
+
+class AuthService {
+  async login(loginData: LoginData): Promise<AuthResponse | null> {
+    try {
+      const response = await axios.post<AuthResponse>('/login', loginData);
+      if (response.data.access_token) {
+
+        localStorage.setItem('access_token', response.data.access_token);
+
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+        return response.data;
+      }
     } catch (error) {
-      throw new Error('Failed to login. Please check your credentials and try again.');
+      console.error('Login error:', error);
+      throw error;
+    }
+    return null;
+  }
+
+  async register(registerData: RegisterData): Promise<void> {
+    try {
+      await axios.post('/register', registerData);
+      
+    } catch (error) {
+      console.error('Register error:', error);
+      throw error;
     }
   }
-};
 
-export default AuthService;
+  logout(): void {
+    localStorage.removeItem('access_token');
+    delete axios.defaults.headers.common['Authorization'];
+    
+  }
+}
+
+export default new AuthService();

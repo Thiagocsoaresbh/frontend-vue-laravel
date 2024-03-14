@@ -12,6 +12,7 @@
           <p>Description: {{ check.description }}</p>
           <p>Amount: ${{ check.amount }}</p>
           <p>Status: {{ check.status }}</p>
+          <!-- Adicione mais detalhes conforme necessário -->
         </li>
       </ul>
       <p v-else>No checks to display.</p>
@@ -22,7 +23,7 @@
   export default {
     data() {
       return {
-        checks: [],
+        checks: [], // Este array deve ser preenchido com os dados do seu backend
         selectedStatus: 'all',
       };
     },
@@ -40,8 +41,9 @@
     },
     methods: {
       async fetchChecks() {
-
-        // I will implement here the logic to fetch the checks from the server
+        // Implemente a lógica para buscar os cheques do seu backend aqui
+        // Por exemplo, usar axios para fazer uma solicitação GET ao endpoint apropriado
+        // this.checks = resposta do seu backend
       },
     },
   };
