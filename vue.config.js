@@ -1,12 +1,13 @@
-const { defineConfig } = require('@vue/cli-service');
-const path = require('path');
+import { defineConfig } from '@vue/cli-service';
+import { resolve } from 'path';
 
-module.exports = defineConfig({
+export default defineConfig({
   transpileDependencies: true,
   configureWebpack: {
     resolve: {
+      extensions: ['.ts', '.js', '.vue', '.json'], // Including .ts explicitly
       alias: {
-        '@': path.resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'src')
       }
     }
   }
