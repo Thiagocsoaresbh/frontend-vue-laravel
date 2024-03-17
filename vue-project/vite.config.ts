@@ -13,7 +13,7 @@ export default defineConfig({
     VueDevTools(),
   ],
   build: {
-    chunkSizeWarningLimit: 7000,
+    chunkSizeWarningLimit: 800,
   },
   resolve: {
     alias: {
