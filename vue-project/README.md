@@ -1,3 +1,5 @@
+Remember to clena the console logs, dd...
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d54e9b0c-45a6-4ce3-91b3-d48529364ef2/deploy-status)](https://app.netlify.com/sites/enchanting-salamander-f2580c/deploys)
 
 # vue-project

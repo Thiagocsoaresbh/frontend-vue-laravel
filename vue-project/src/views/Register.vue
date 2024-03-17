@@ -13,6 +13,10 @@
       <div>
         <label for="password">Password:</label>
         <input id="password" type="password" v-model="password" required>
+        <!-- Error msg abour the lengh of the password -->
+        <p v-if="password.length > 0 && password.length < 8" class="error-message">
+          Password must be at least 8 characters long.
+        </p>
       </div>
       <button type="submit">Sign Up</button>
     </form>
@@ -23,14 +27,17 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth'; // Import the auth store
 import { useRouter } from 'vue-router';
+import { errorMessages } from 'vue/compiler-sfc';
 
 const username = ref('');
 const email = ref('');
 const password = ref('');
+const errorMessage = ref('');
 const authStore = useAuthStore();
 const router = useRouter();
 
 const handleRegister = async () => {
+  errorMessages.value = '';
   try {
     await authStore.registerUser({
       username: username.value,
@@ -38,9 +45,10 @@ const handleRegister = async () => {
       password: password.value,
       role: 'customer', 
     });
-    alert('User registered successfully!');
+    
     router.push('/login');
   } catch (error) {
+    errorMessages.value = 'Regiter failed! Please try again.'
     console.error('Error signing up:', error.response?.data?.message || 'Unknown error');
   }
 };
@@ -73,6 +81,11 @@ form {
   margin-bottom: 15px;
 }
 
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
 input {
   width: calc(100% - 20px);
   padding: 10px;
@@ -98,8 +111,11 @@ button:hover {
 }
 
 .separator {
-  border-top: 1px solid #2899fb;
-  margin: 20px 0;
+  height: 2px;
+  background-color: grey;
+  width: 5%;
+  margin: 20px auto;
+  border-radius: 15;
 }
 
 .existing-account {
