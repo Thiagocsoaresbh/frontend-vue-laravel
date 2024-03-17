@@ -12,6 +12,9 @@ export default defineConfig({
     vueJsx(),
     VueDevTools(),
   ],
+  build: {
+    chunkSizeWarningLimit: 7000,
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
