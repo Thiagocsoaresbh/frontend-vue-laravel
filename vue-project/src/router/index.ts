@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth'; 
-import RegisterView from '@/views/Register.vue';
+import RegisterView from '@/views/RegisterView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
